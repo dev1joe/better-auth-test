@@ -9,6 +9,7 @@ import { PasswordInput } from "./ui/password-input";
 import { LoadingSwap } from "./ui/loading-swap";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const signupSchema = z.object({
     name: z.string().min(1),
@@ -18,6 +19,8 @@ const signupSchema = z.object({
 type signupForm = z.infer<typeof signupSchema>;
 
 export function SignUpTab() {
+    const router = useRouter();
+
     const form = useForm<signupForm>({
         resolver: zodResolver(signupSchema),
         defaultValues: {
@@ -33,9 +36,11 @@ export function SignUpTab() {
         await authClient.signUp.email({ ...data}, {
             onError: (error) => {
                 toast.error(error.error.message || "Failed to sign up");
+            },
+            onSuccess: () => {
+                router.push('/');
             }
         })
-        return new Promise(resolve => setTimeout(resolve, 2000));
     }
 
     return (
