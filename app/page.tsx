@@ -17,7 +17,7 @@ export default function Home() {
         <>
           <h1 className="text-4xl font-bold">Welcome to our App</h1>
           <Button asChild size="lg">
-            <Link href="/auth/login">Sign In / Sign Up</Link>
+            <Link href="/auth">Sign In / Sign Up</Link>
           </Button>
         </>
       ) : (
@@ -25,6 +25,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold">Welcome {session.user.name}</h1>
           {/* TODO: Add loading states */}
           <Button
+            className="cursor-pointer"
             variant="destructive"
             size="lg"
             onClick={() => authClient.signOut()}

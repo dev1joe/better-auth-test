@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const signupSchema = z.object({
     name: z.string().min(1),
-    email: z.string().min(1),
+    email: z.email().min(1),
     password: z.string().min(1)
 });
 type signupForm = z.infer<typeof signupSchema>;
@@ -95,6 +95,7 @@ export function SignUpTab() {
                     type="submit"
                     disabled={isSubmitting}
                     className="w-full cursor-pointer"
+                    size={'lg'}
                 >
                     <LoadingSwap isLoading={isSubmitting}>
                         Submit

@@ -26,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-screen`}
       >
         {/* added dark mode css class */}
         {children}
-        <Toaster />
+        <Toaster position="top-right" closeButton={true} />
       </body>
     </html>
   );

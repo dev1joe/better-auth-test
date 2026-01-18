@@ -1,4 +1,107 @@
 import { auth } from "@/lib/auth"; // path to your auth file
 import { toNextJsHandler } from "better-auth/next-js";
+import arcjet, { BotOptions, detectBot, EmailOptions, protectSignup, shield, slidingWindow, SlidingWindowRateLimitOptions } from '@arcjet/next';
+import { serverConfig } from "@/config/server";
+import { findIp } from "@arcjet/ip";
 
-export const { POST, GET } = toNextJsHandler(auth);
+const aj = arcjet({
+    key: serverConfig.arcjet.key,
+    characteristics: ["userIdOrIp"], // creating a characteristic for identifying users (use user id, or ip as a fallback)
+    rules: [shield({ mode: "LIVE" })] // using ArcJet Shield
+});
+
+const botSettings = { mode: "LIVE", allow: [] } satisfies BotOptions;
+
+const emailSettings = {
+    mode: "LIVE",
+    deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+} satisfies EmailOptions;
+
+const restrictiveRateLimitSettings = {
+    mode: "LIVE",
+    max: 10,
+    interval: "10m"
+} satisfies SlidingWindowRateLimitOptions<[]>;
+
+const laxRateLimitSettings = {
+    mode: "LIVE",
+    max: 10,
+    interval: "1m"
+} satisfies SlidingWindowRateLimitOptions<[]>;
+
+const authHandlers = toNextJsHandler(auth);
+export const { GET } = authHandlers;
+
+export async function POST(request: Request) {
+    // clone the request for using it twice
+    // one for Arcject checking and one for returning in successful requests
+    const clonedRequest = request.clone();
+    
+    // get ArcJet decision about the current request
+    const decision = await checkArcjet(request);
+
+    if (decision.isDenied()) {
+        if (decision.reason.isRateLimit()) {
+            // client got rate limited in any page in the website
+            // 429 Too Many Requests
+            return new Response(null, { status: 429 });
+
+        } else if (decision.reason.isEmail()) {
+            // invalid email in signup page
+            let message: string;
+
+            if (decision.reason.emailTypes.includes("DISPOSABLE")) {
+                message = "Disposable email addresses are not allowed";
+            } else if (decision.reason.emailTypes.includes("INVALID")) {
+                message = "Email address format is invalid";
+            } else if (decision.reason.emailTypes.includes("NO_MX_RECORDS")) {
+                message = "Email domain not available";
+            } else {
+                message = "Invalid email";
+            }
+
+            return Response.json({ message }, { status: 400 });
+        } else {
+            // bots in any page or any other reason of rejection
+            return new Response(null, { status: 403 });
+        }
+    }
+
+    return authHandlers.POST(clonedRequest);
+}
+
+async function checkArcjet(request: Request) {
+    const body = (request.json()) as unknown;
+
+    // get user id or ip
+    const session = await auth.api.getSession({ headers: request.headers });
+    const userIdOrIp = (session?.user.id ?? findIp(request)) || '127.0.0.1';
+
+    // if on the signup page, attach the following rules
+    if (request.url.endsWith('/auth/sign-up')) {
+
+        // check signup method
+        if (body && typeof body === 'object' && 'email' in body && typeof body.email === 'string') {
+            // email signup
+            return aj.withRule(
+                protectSignup({
+                    email: emailSettings,
+                    bots: botSettings,
+                    rateLimit: restrictiveRateLimitSettings
+                })
+            ).protect(request, { email: body.email, userIdOrIp: userIdOrIp });
+        } else {
+            // OAuth signup
+            return aj
+                .withRule(detectBot(botSettings))
+                .withRule(slidingWindow(restrictiveRateLimitSettings))
+                .protect(request, { userIdOrIp });
+        }
+    }
+
+    // if NOT on the signup page, use a more generic rate limiting
+    return aj
+        .withRule(detectBot(botSettings))
+        .withRule(slidingWindow(laxRateLimitSettings))
+        .protect(request, { userIdOrIp });
+}
