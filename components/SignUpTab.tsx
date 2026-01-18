@@ -33,7 +33,7 @@ export function SignUpTab() {
     const { isSubmitting } = form.formState
 
     async function handleSignup(data: signupForm) {
-        await authClient.signUp.email({ ...data}, {
+        await authClient.signUp.email({ ...data }, {
             onError: (error) => {
                 toast.error(error.error.message || "Failed to sign up");
             },

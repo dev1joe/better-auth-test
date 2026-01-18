@@ -1,4 +1,5 @@
 "use client";
+import { BetterAuthActionButton } from "@/components/auth/BetterAuthActionButton";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
@@ -23,15 +24,14 @@ export default function Home() {
       ) : (
         <>
           <h1 className="text-4xl font-bold">Welcome {session.user.name}</h1>
-          {/* TODO: Add loading states */}
-          <Button
+          <BetterAuthActionButton
             className="cursor-pointer"
             variant="destructive"
             size="lg"
-            onClick={() => authClient.signOut()}
+            action={() => authClient.signOut()}
           >
             Sign Out
-          </Button>
+          </BetterAuthActionButton>
         </>
       )
       }

@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getDB } from "@/db"; // your drizzle instance
 import { nextCookies } from "better-auth/next-js";
+import { serverConfig } from "@/config/server";
 
 const db = getDB();
 
@@ -11,6 +12,10 @@ export const auth = betterAuth({
     }),
     emailAndPassword: {
         enabled: true,
+    },
+    socialProviders: {
+        github: { ...serverConfig.socialProviders.github},
+        discord: { ...serverConfig.socialProviders.discord},
     },
     session: {
         cookieCache: {
