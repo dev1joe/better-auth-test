@@ -7,6 +7,7 @@ const envSchema = z.object({
     GITHUB_CLIENT_SECRET: z.string().min(1),
     DISCORD_CLIENT_ID: z.string().min(1),
     DISCORD_CLIENT_SECRET: z.string().min(1),
+    MAILTRAP_TOKEN: z.string().min(1),
 });
 
 const parseResult = envSchema.safeParse(process.env);
@@ -32,5 +33,8 @@ export const serverConfig = {
             clientId: parseResult.data.GITHUB_CLIENT_ID,
             clientSecret: parseResult.data.GITHUB_CLIENT_SECRET
         }
+    },
+    mailtrap: {
+        token: parseResult.data.MAILTRAP_TOKEN
     }
 }

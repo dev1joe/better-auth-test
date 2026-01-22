@@ -1,17 +1,23 @@
 "use client";
 import { useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
-import { LoadingSwap } from './ui/loading-swap';
-import { PasswordInput } from './ui/password-input';
+import { Button } from '../ui/button';
+import { LoadingSwap } from '../ui/loading-swap';
+import { PasswordInput } from '../ui/password-input';
 
-export function SignInTab() {
+export function SignInTab({
+    openVerificationTab,
+    openForgotPasswordTab,
+}: {
+    openVerificationTab: (email: string) => void
+    openForgotPasswordTab: () => void
+}) {
     const router = useRouter();
 
     const signinSchema = z.object({
@@ -29,11 +35,15 @@ export function SignInTab() {
         }
     });
 
-    const { isSubmitting } = form.formState
+    const { isSubmitting } = form.formState;
 
     async function handleSignin(data: signinForm) {
-        await authClient.signIn.email({...data}, {
+        await authClient.signIn.email({ ...data }, {
             onError: (error) => {
+                console.log(error);
+                if (error.error.code == "EMAIL_NOT_VERIFIED") {
+                    openVerificationTab(data.email)
+                }
                 toast.error(error.error.message || "Failed to sign in");
             },
             onSuccess: () => {
@@ -57,7 +67,7 @@ export function SignInTab() {
                             <FormControl>
                                 <Input type="email" {...field}></Input>
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -67,14 +77,26 @@ export function SignInTab() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <div className='flex justify-between'>
+                                <FormLabel>Password</FormLabel>
+                                <Button
+                                    type='button'
+                                    variant='link'
+                                    onClick={openForgotPasswordTab}
+                                    className='cursor-pointer'
+                                >
+                                    Forgot Password?
+                                </Button>
+                            </div>
                             <FormControl>
                                 <PasswordInput {...field} />
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                {/* TODO: confirm password field */}
 
                 <Button
                     type='submit'

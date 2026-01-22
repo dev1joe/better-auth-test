@@ -34,3 +34,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Features
+- [X] sign up (create account)
+- [X] sign in
+- [X] sign out
+- [X] send verification email
+- [X] verify email page
+- [X] send reset password email
+- [ ] reset password page
+- [ ] navbar to be able to return to home from anywhere
+- [ ] profile page
+    - show verification status (turn `requireEmailVerification` off first)
+    - reset password
+    - update user info functionality
+- [ ] using react email templates
