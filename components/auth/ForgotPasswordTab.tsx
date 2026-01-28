@@ -29,16 +29,16 @@ export function ForgotPasswordTab({
 
     async function handleSubmit(data: forgotPasswordForm) {
         await authClient.requestPasswordReset({
-            ...data,
+            email: data.email,
             redirectTo: '/auth/reset-password'
         }, {
             onError: (error) => {
                 toast.error(
                     error.error.message || "Failed to send password reset email"
-                )
+                );
             },
             onSuccess: () => {
-                toast.success('Password reset email sent')
+                toast.success('Password reset email sent');
             }
         })
     }
@@ -75,7 +75,7 @@ export function ForgotPasswordTab({
                     <Button
                         type='submit'
                         disabled={isSubmitting}
-                        className='cursor-pointer flex-3'
+                        className='cursor-pointer flex-6'
                         size="lg"
                     >
                         <LoadingSwap isLoading={isSubmitting}>

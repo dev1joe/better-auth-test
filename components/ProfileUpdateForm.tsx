@@ -1,0 +1,100 @@
+"use client";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/ui/password-input";
+import { LoadingSwap } from "@/components/ui/loading-swap";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner"
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@/db/types";
+
+export function ProfileUpdateForm({ email, name }: {
+    email: string,
+    name: string,
+}) {
+    const updateProfileSchema = z.object({
+        email: z.email().min(1),
+        name: z.string().min(1),
+    });
+
+    type updateProfileForm = z.infer<typeof updateProfileSchema>;
+
+    const form = useForm<updateProfileForm>({
+        resolver: zodResolver(updateProfileSchema),
+        defaultValues: {
+            email: email,
+            name: name
+        }
+    });
+
+    const { isLoading: isSubmitting } = form.formState;
+
+    function handleUpdate(data: updateProfileForm) {
+        return null;
+    }
+
+    return (
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(handleUpdate)}
+                className="space-y-4"
+            >
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input type="text" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input type="email" disabled {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <PasswordInput {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                /> */}
+
+                <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full cursor-pointer"
+                    size={'lg'}
+                >
+                    <LoadingSwap isLoading={isSubmitting}>
+                        Update Profile
+                    </LoadingSwap>
+                </Button>
+            </form>
+        </Form>
+    )
+}

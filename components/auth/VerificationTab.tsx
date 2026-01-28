@@ -11,6 +11,7 @@ export function VerificationTab({ email }: VerificationTabProps) {
     const [countdown, setCountDown] = useState<number>(0);
     const interval = useRef<NodeJS.Timeout>(undefined);
 
+    // TODO: there is an error when calling this function in the component scope, solve that
     function startEmailVerificationCountdown(time = 30) {
         setCountDown(time);
 

@@ -38,11 +38,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Features
 - [X] sign up (create account)
 - [X] sign in
+- [X] sign in with OAuth Providers
 - [X] sign out
+- [ ] welcome email
 - [X] send verification email
 - [X] verify email page
 - [X] send reset password email
-- [ ] reset password page
+- [X] reset password page
+- [ ] profile management
+- [ ] delete account functionality
+- [ ] two-factor authentication (2FA)
+- [ ] Admin better-auth plugin
+- [ ] organization better-auth plugin
 - [ ] navbar to be able to return to home from anywhere
 - [ ] profile page
     - show verification status (turn `requireEmailVerification` off first)

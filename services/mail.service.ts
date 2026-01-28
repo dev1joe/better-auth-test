@@ -14,9 +14,10 @@ type User = {
     email: string,
 }
 
+// TODO: update email templates from webdevsimplified github
 export function sendVerificationEmail(user: User, url: string) {
     const options: EmailOptions = {
-        from: { name: "better auth test app", email: "divosilver.144@gmail.com" },
+        from: { name: "better auth test app", email: serverConfig.appEmail },
         to: user.email,
         subject: "Test verification email",
         html: `
@@ -30,7 +31,7 @@ export function sendVerificationEmail(user: User, url: string) {
 
 export function sendResetPasswordEmail(user: User, url: string){
         const options: EmailOptions = {
-        from: { name: "better auth test app", email: "divosilver.144@gmail.com" },
+        from: { name: "better auth test app", email: serverConfig.appEmail },
         to: user.email,
         subject: "Test password reset email",
         html: `
@@ -38,6 +39,19 @@ export function sendResetPasswordEmail(user: User, url: string){
             <p><a href="${url}">Reset your password</a></p>
         `
     };
+
+    return sendTestEmail(options);
+}
+
+export function sendWelcomeEmail(user: User) {
+    const options: EmailOptions = {
+        from: { name: "better auth test app", email: serverConfig.appEmail },
+        to: user.email,
+        subject: `Welcome ${user.name} to test application`,
+        html: `
+            <h1>Welcome to test application</h1>
+        `
+    }
 
     return sendTestEmail(options);
 }

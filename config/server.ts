@@ -8,6 +8,7 @@ const envSchema = z.object({
     DISCORD_CLIENT_ID: z.string().min(1),
     DISCORD_CLIENT_SECRET: z.string().min(1),
     MAILTRAP_TOKEN: z.string().min(1),
+    APP_EMAIL: z.email().min(1),
 });
 
 const parseResult = envSchema.safeParse(process.env);
@@ -36,5 +37,6 @@ export const serverConfig = {
     },
     mailtrap: {
         token: parseResult.data.MAILTRAP_TOKEN
-    }
+    },
+    appEmail: parseResult.data.APP_EMAIL,
 }

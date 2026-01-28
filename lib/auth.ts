@@ -3,7 +3,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getDB } from "@/db"; // your drizzle instance
 import { nextCookies } from "better-auth/next-js";
 import { serverConfig } from "@/config/server";
-import { sendResetPasswordEmail, sendVerificationEmail } from "@/services/mail.service";
+import { sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
+import { createAuthMiddleware } from "better-auth/api";
 
 const db = getDB();
 
@@ -14,20 +15,20 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
-        sendResetPassword: async ({user, url}) => {
+        sendResetPassword: async ({ user, url }) => {
             await sendResetPasswordEmail(user, url);
         }
     },
     emailVerification: {
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
-        sendVerificationEmail: async ({user, url}) => {
+        sendVerificationEmail: async ({ user, url }) => {
             await sendVerificationEmail(user, url);
         }
     },
     socialProviders: {
-        github: { ...serverConfig.socialProviders.github},
-        discord: { ...serverConfig.socialProviders.discord},
+        github: { ...serverConfig.socialProviders.github },
+        discord: { ...serverConfig.socialProviders.discord },
     },
     session: {
         cookieCache: {
@@ -37,5 +38,17 @@ export const auth = betterAuth({
     },
     plugins: [
         nextCookies()
-    ]
+    ],
+    // hooks: {
+    //     after: createAuthMiddleware(async (ctx) => {
+    //         if (ctx.path.startsWith('/sign-up')) {
+    //             const user = ctx.context.newSession?.user ?? {
+    //                 name: ctx.body.name,
+    //                 email: ctx.body.email
+    //             };
+
+    //             await sendWelcomeEmail(user);
+    //         }
+    //     })
+    // }
 });
