@@ -7,6 +7,7 @@ import { ArrowLeft, Key, LinkIcon, Shield, Trash2, User } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProfileUpdateForm } from "@/components/ProfileUpdateForm";
+import { SecurityTab } from "./_components/SecurityTab";
 
 export default function ProfilePage() {
     const { data: session, isPending: loading } = authClient.useSession();
@@ -83,11 +84,7 @@ export default function ProfilePage() {
                 </TabsContent>
 
                 <TabsContent value="security">
-                    <Card>
-                        <CardContent>
-                            hello from security
-                        </CardContent>
-                    </Card>
+                    {session && <SecurityTab email={session?.user.email} />}
                 </TabsContent>
             </Tabs>
         </div>

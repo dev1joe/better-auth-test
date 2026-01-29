@@ -45,7 +45,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [X] verify email page
 - [X] send reset password email
 - [X] reset password page
-- [ ] profile management
+- [X] redirect to reset password from sign in form
+- [X] profile management
+- [X] change password tab in profile page (for users using a credentials)
+- [X] redirect to set password from profile page (for users using an OAuth provider)
 - [ ] delete account functionality
 - [ ] two-factor authentication (2FA)
 - [ ] Admin better-auth plugin

@@ -9,12 +9,14 @@ import { toast } from "sonner"
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@/db/types";
+import { useRouter } from "next/navigation";
 
-export function ProfileUpdateForm({ email, name }: {
+export function ProfileUpdateForm({ email: userEmail, name: username }: {
     email: string,
     name: string,
 }) {
+    const router = useRouter();
+
     const updateProfileSchema = z.object({
         email: z.email().min(1),
         name: z.string().min(1),
@@ -25,15 +27,43 @@ export function ProfileUpdateForm({ email, name }: {
     const form = useForm<updateProfileForm>({
         resolver: zodResolver(updateProfileSchema),
         defaultValues: {
-            email: email,
-            name: name
+            email: userEmail,
+            name: username
         }
     });
 
     const { isLoading: isSubmitting } = form.formState;
 
-    function handleUpdate(data: updateProfileForm) {
-        return null;
+    async function handleUpdate(data: updateProfileForm) {
+        const promises = [
+            authClient.updateUser({ name: data.name })
+        ];
+
+        if (data.email !== userEmail) {
+            promises.push(authClient.changeEmail({ newEmail: data.email }));
+        }
+
+        const res = await Promise.all(promises);
+
+        const updateResult = res[0];
+        const emailResult = res[1];
+
+        if (emailResult.error) {
+            toast.error(emailResult.error.message || "Failed to update Email");
+        } else if (updateResult.error) {
+            toast.error(updateResult.error.message || "Failed to update profile");
+        } else {
+            if (data.email !== userEmail) {
+                toast.success(
+                    "Verify your new email address to complete the change", 
+                    {description: "check the inbox of your new email for a verification email"}
+                );
+            } else {
+                toast.success("Profile updated successfully");
+            }
+
+            router.refresh();
+        }
     }
 
     return (
@@ -63,7 +93,7 @@ export function ProfileUpdateForm({ email, name }: {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input type="email" disabled {...field} />
+                                <Input type="email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
