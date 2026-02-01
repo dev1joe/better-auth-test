@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
         pathname: "/avatars/**"
       }
     ]
-  }
+  },
+  allowedDevOrigins: ['192.168.*.*', '10.*.*.*', '127.0.0.1']
 };
 
 export default nextConfig;

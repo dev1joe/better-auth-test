@@ -9,6 +9,7 @@ import { createAuthMiddleware } from "better-auth/api";
 const db = getDB();
 
 export const auth = betterAuth({
+    trustedOrigins: ['192.168.*.*', '10.*.*.*', '127.0.0.1'],
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
     }),
@@ -41,7 +42,7 @@ export const auth = betterAuth({
     session: {
         cookieCache: {
             enabled: true,
-            maxAge: 60 * 60 * 24, // one day in seconds
+            maxAge: 60 * 60 * 1, // one hour in seconds
         }
     },
     plugins: [

@@ -1,15 +1,18 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { SetPasswordButton } from "./SetPasswordButton";
 
 export function SecurityTab({ email: userEmail }: { email: string }) {
     const [hasPasswordAccount, setHasPasswordAccount] = useState<boolean>(false);
-    authClient.listAccounts().then((accounts) => {
-        const res: boolean = accounts.data?.some(a => a.providerId === 'credential') || false;
-        setHasPasswordAccount(res);
-    });
+
+    useEffect(() => {
+        authClient.listAccounts().then((accounts) => {
+            const res: boolean = accounts.data?.some(a => a.providerId === 'credential') || false;
+            setHasPasswordAccount(res);
+        });
+    }, [])
 
     return (
         <div className="space-y-6">

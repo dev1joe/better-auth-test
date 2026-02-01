@@ -13,7 +13,7 @@ export const SUPPORTED_OAUTH_PROVIDERS_DETAILS: Record<
         Icon: DiscordIcon
     },
     github: {
-        name: 'Github',
+        name: 'GitHub',
         Icon: GitHubIcon
     }
 }
