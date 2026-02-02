@@ -12,7 +12,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-full p-24 mt-3 flex flex-col items-center justify-start gap-3 outline-4 outline-babyblue-200">
+    <main className="min-h-full p-12 lg:p-20 mt-3 flex flex-col items-center justify-start gap-3 outline-4 outline-babyblue-200">
 
       {session === null ? (
         <>

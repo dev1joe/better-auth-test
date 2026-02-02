@@ -50,8 +50,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [X] change password tab in profile page (for users using a credentials)
 - [X] redirect to set password from profile page (for users using an OAuth provider)
 - [X] session management
-- [ ] linked accounts management
-- [ ] delete account functionality
+- [X] linked accounts management
+- [X] delete account functionality
 - [ ] two-factor authentication (2FA)
 - [ ] website skeleton loading 
 - [ ] Admin better-auth plugin
@@ -60,3 +60,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [ ] profile page: show verification status (turn `requireEmailVerification` off first) 
 - [ ] using react email templates
 - [ ] add google to the "supported OAuth providers"
+- [ ] verify form schemas in this application

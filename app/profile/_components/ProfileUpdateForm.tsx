@@ -2,7 +2,6 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PasswordInput } from "@/components/ui/password-input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner"
@@ -48,7 +47,7 @@ export function ProfileUpdateForm({ email: userEmail, name: username }: {
         const updateResult = res[0];
         const emailResult = res[1];
 
-        if (emailResult.error) {
+        if (emailResult?.error) {
             toast.error(emailResult.error.message || "Failed to update Email");
         } else if (updateResult.error) {
             toast.error(updateResult.error.message || "Failed to update profile");
@@ -99,21 +98,6 @@ export function ProfileUpdateForm({ email: userEmail, name: username }: {
                         </FormItem>
                     )}
                 />
-
-                {/* <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <PasswordInput {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                /> */}
-
                 <Button
                     type="submit"
                     disabled={isSubmitting}

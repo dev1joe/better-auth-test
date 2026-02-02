@@ -1,3 +1,4 @@
+"use client";
 import { Session } from "better-auth";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -33,7 +34,7 @@ export function SessionManagement({
 
             {otherSessions.length === 0 ?
                 <Card>
-                    <CardContent className="text-center py-7">
+                    <CardContent className="text-center py-8">
                         <p>No other active sessions</p>
                     </CardContent>
                 </Card>
@@ -116,7 +117,10 @@ function SessionCard({
     function revokeSession() {
         return authClient.revokeSession(
             { token: session.token },
-            { onSuccess: () => router.refresh() }
+            { onSuccess: () => {
+                // console.log("session revoked, refreshing page using next/navigation router");
+                router.refresh();
+            } }
         );
     }
 

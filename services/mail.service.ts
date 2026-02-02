@@ -56,6 +56,21 @@ export function sendWelcomeEmail(user: User) {
     return sendTestEmail(options);
 }
 
+export function sendDeleteAccountVerification(user: User, url: string) {
+    const options: EmailOptions = {
+        from: { name: "better auth test app", email: serverConfig.appEmail },
+        to: user.email,
+        subject: `Confirm Account Deletion`,
+        html: `
+            <p>Hello ${user.name}.</p>
+            <p>We're sorry to see you go! Please confirm your account deletion by clicking on the button below:</p>
+            <p><a href="${url}">Confirm Deletion</a></p>
+        `
+    }
+
+    return sendTestEmail(options);
+}
+
 function sendEmail(options: EmailOptions) {
     const client = new MailtrapClient({ token: serverConfig.mailtrap.token });
 
