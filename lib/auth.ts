@@ -5,6 +5,7 @@ import { nextCookies } from "better-auth/next-js";
 import { serverConfig } from "@/config/server";
 import { sendDeleteAccountVerification, sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
 import { createAuthMiddleware } from "better-auth/api";
+import { twoFactor } from 'better-auth/plugins';
 
 const db = getDB();
 
@@ -16,13 +17,13 @@ export const auth = betterAuth({
     user: {
         changeEmail: {
             enabled: true,
-            sendChangeEmailConfirmation: async ({ user, url, newEmail}) => {
-                await sendVerificationEmail({...user, email: newEmail}, url);
+            sendChangeEmailConfirmation: async ({ user, url, newEmail }) => {
+                await sendVerificationEmail({ ...user, email: newEmail }, url);
             }
         },
         deleteUser: {
             enabled: true,
-            sendDeleteAccountVerification: async ({user, url}) => {
+            sendDeleteAccountVerification: async ({ user, url }) => {
                 await sendDeleteAccountVerification(user, url);
             }
         }
@@ -52,7 +53,8 @@ export const auth = betterAuth({
         }
     },
     plugins: [
-        nextCookies()
+        nextCookies(),
+        twoFactor()
     ],
     // hooks: {
     //     after: createAuthMiddleware(async (ctx) => {

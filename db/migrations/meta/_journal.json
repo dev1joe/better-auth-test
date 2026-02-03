@@ -8,6 +8,13 @@
       "when": 1768596550381,
       "tag": "0000_groovy_sabretooth",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770119040268,
+      "tag": "0001_first_beast",
+      "breakpoints": true
     }
   ]
 }

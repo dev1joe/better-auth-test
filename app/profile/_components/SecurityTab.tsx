@@ -3,8 +3,16 @@ import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { SetPasswordButton } from "./SetPasswordButton";
+import { TwoFactorAuth } from "./TwoFactorAuth";
+import { Badge } from "@/components/ui/badge";
 
-export function SecurityTab({ email: userEmail }: { email: string }) {
+export function SecurityTab({
+    email: userEmail,
+    isTwoFactorEnabled
+}: {
+    email: string,
+    isTwoFactorEnabled: boolean,
+}) {
     const [hasPasswordAccount, setHasPasswordAccount] = useState<boolean>(false);
 
     useEffect(() => {
@@ -37,6 +45,18 @@ export function SecurityTab({ email: userEmail }: { email: string }) {
                     </CardContent>
                 </Card>
             )}
+
+            <Card>
+                <CardHeader className="flex justify-between items-center">
+                    <CardTitle>Two-Factor Authentication (2FA)</CardTitle>
+                    <Badge variant={isTwoFactorEnabled? `default`: `secondary`}>
+                        {isTwoFactorEnabled ? `Enabled` : `Disabled`}
+                    </Badge>
+                </CardHeader>
+                <CardContent>
+                    <TwoFactorAuth isEnabled={isTwoFactorEnabled} />
+                </CardContent>
+            </Card>
         </div>
     );
 }

@@ -61,3 +61,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [ ] using react email templates
 - [ ] add google to the "supported OAuth providers"
 - [ ] verify form schemas in this application
+- [ ] next.js redirect VS next/navigation/router.push ??

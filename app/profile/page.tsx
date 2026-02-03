@@ -21,8 +21,8 @@ export default function ProfilePage() {
         return (<div>loading...</div>);
     }
 
-    return (
-        <div className="max-w-4xl mx-auto my-6 px-4">
+    return ( // TODO: bottom margin is hidden, solve that!
+        <div className="max-w-4xl mx-auto my-6 px-4 box-border">
             <div className="mb-8">
                 <Link href="/" className="inline-flex items-center mb-6">
                     <ArrowLeft className="size-4 mr-2" />
@@ -87,7 +87,7 @@ export default function ProfilePage() {
                 </TabsContent>
 
                 <TabsContent value="security">
-                    {session && <SecurityTab email={session?.user.email} />}
+                    {session && <SecurityTab email={session?.user.email} isTwoFactorEnabled={session.user.twoFactorEnabled ?? false} />}
                 </TabsContent>
 
                 <TabsContent value="sessions">
