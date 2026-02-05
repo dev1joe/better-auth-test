@@ -6,6 +6,7 @@ import { serverConfig } from "@/config/server";
 import { sendDeleteAccountVerification, sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
 import { createAuthMiddleware } from "better-auth/api";
 import { twoFactor } from 'better-auth/plugins';
+import { passkey } from '@better-auth/passkey'
 
 const db = getDB();
 
@@ -54,7 +55,8 @@ export const auth = betterAuth({
     },
     plugins: [
         nextCookies(),
-        twoFactor()
+        twoFactor(),
+        passkey(),
     ],
     // hooks: {
     //     after: createAuthMiddleware(async (ctx) => {

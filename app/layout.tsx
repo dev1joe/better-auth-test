@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark min-h-screen`} //! should set minimum height, not the exact hight !!!!
       >
         {/* added dark mode css class */}
         {children}

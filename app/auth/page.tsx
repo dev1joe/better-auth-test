@@ -1,9 +1,9 @@
 "use client";
-import { ForgotPasswordTab } from "@/components/auth/ForgotPasswordTab";
-import { SignInTab } from "@/components/auth/SignInTab";
-import { SignUpTab } from "@/components/auth/SignUpTab";
-import { VerificationTab } from "@/components/auth/VerificationTab";
-import { SocialAuthButtons } from "@/components/SocialAuthButtons";
+import { ForgotPasswordTab } from "@/app/auth/_components/ForgotPasswordTab";
+import { SignInTab } from "@/app/auth/_components/SignInTab";
+import { SignUpTab } from "@/app/auth/_components/SignUpTab";
+import { VerificationTab } from "@/app/auth/_components/VerificationTab";
+import { SocialAuthButtons } from "@/app/auth/_components/SocialAuthButtons";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";

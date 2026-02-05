@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import { BetterAuthActionButton } from "./BetterAuthActionButton";
+import { BetterAuthActionButton } from "../../../components/auth/BetterAuthActionButton";
 import { useRef, useState } from "react";
 
 type VerificationTabProps = {

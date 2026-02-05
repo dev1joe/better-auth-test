@@ -52,13 +52,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [X] session management
 - [X] linked accounts management
 - [X] delete account functionality
-- [ ] two-factor authentication (2FA)
-- [ ] website skeleton loading 
+- [X] two-factor authentication (2FA)
+- [ ] passkeys better-auth plugin (has an Error 🔴)
 - [ ] Admin better-auth plugin
 - [ ] organization better-auth plugin
+- [ ] website skeleton loading 
 - [ ] navbar to be able to return to home from anywhere
 - [ ] profile page: show verification status (turn `requireEmailVerification` off first) 
 - [ ] using react email templates
 - [ ] add google to the "supported OAuth providers"
 - [ ] verify form schemas in this application
 - [ ] next.js redirect VS next/navigation/router.push ??
+- [ ] fix: messages/prerender-errors error in reset-password.tsx page

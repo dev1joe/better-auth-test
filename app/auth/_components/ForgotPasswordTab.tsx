@@ -1,13 +1,13 @@
 "use client";
 import { useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form";
+import { Input } from "../../../components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
-import { Button } from '../ui/button';
-import { LoadingSwap } from '../ui/loading-swap';
+import { Button } from '../../../components/ui/button';
+import { LoadingSwap } from '../../../components/ui/loading-swap';
 
 export function ForgotPasswordTab({
     openSignInTab

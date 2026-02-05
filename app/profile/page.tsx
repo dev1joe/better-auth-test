@@ -18,7 +18,11 @@ export default function ProfilePage() {
 
     if (loading) {
         // TODO: handle loading state, maybe use a skeleton
-        return (<div>loading...</div>);
+        return (
+            <div className="cursor-progress w-screen h-screen flex justify-center items-center">
+                <p className="text-3xl font-semibold">Loading...</p>
+            </div>
+        );
     }
 
     return ( // TODO: bottom margin is hidden, solve that!
