@@ -1,14 +1,25 @@
 "use client";
 import { BetterAuthActionButton } from "@/components/auth/BetterAuthActionButton";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [isAdmin, setIsAdmin] = useState(false);
   const { data: session, isPending: loading } = authClient.useSession()
 
+  useEffect(() => {
+    authClient.admin.hasPermission({ permission: { user: ['list'] } }).then((data) => {
+      if (data.data?.success) {
+        setIsAdmin(true);
+      }
+    });
+  }, []);
+
   if (loading) {
-    return (<div>loading...</div>);
+    return (<LoadingScreen />);
   }
 
   return (
@@ -26,11 +37,23 @@ export default function Home() {
           <h1 className="text-4xl font-bold">Welcome {session.user.name}</h1>
 
           <div className="flex gap-4 justify-center">
+            {/* Profile Button */}
             <Link href="/profile">
-              <Button size='lg' variant='outline' className="cursor-pointer">
+              <Button size='lg' className="cursor-pointer">
                 Profile
               </Button>
             </Link>
+
+            {/* admin button */}
+            {isAdmin &&
+              <Link href="/admin">
+                <Button size='lg' variant='outline' className="cursor-pointer">
+                  Admin
+                </Button>
+              </Link>
+            }
+
+            {/* sign out button */}
             <BetterAuthActionButton
               className="cursor-pointer"
               variant="destructive"

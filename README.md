@@ -54,7 +54,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [X] delete account functionality
 - [X] two-factor authentication (2FA)
 - [ ] passkeys better-auth plugin (has an Error 🔴)
-- [ ] Admin better-auth plugin
+- [X] Admin better-auth plugin + admin page
+- [ ] create multiple roles using admin plugin
 - [ ] organization better-auth plugin
 - [ ] website skeleton loading 
 - [ ] navbar to be able to return to home from anywhere

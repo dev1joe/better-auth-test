@@ -5,12 +5,13 @@ import { nextCookies } from "better-auth/next-js";
 import { serverConfig } from "@/config/server";
 import { sendDeleteAccountVerification, sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
 import { createAuthMiddleware } from "better-auth/api";
-import { twoFactor } from 'better-auth/plugins';
+import { admin, twoFactor } from 'better-auth/plugins';
 import { passkey } from '@better-auth/passkey'
 
 const db = getDB();
 
 export const auth = betterAuth({
+    appName: "Better Auth Demo",
     trustedOrigins: ['192.168.*.*', '10.*.*.*', '127.0.0.1'],
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
@@ -57,6 +58,7 @@ export const auth = betterAuth({
         nextCookies(),
         twoFactor(),
         passkey(),
+        admin(),
     ],
     // hooks: {
     //     after: createAuthMiddleware(async (ctx) => {

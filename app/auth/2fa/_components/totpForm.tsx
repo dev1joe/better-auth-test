@@ -40,7 +40,7 @@ export function TotpForm() {
                 }, 2000);
             },
             onSuccess: () => {
-                toast.loading("Redirecting to home page...", {duration: 1000});
+                toast.loading("Redirecting to home page...", {duration: 1, closeButton: true});
                 router.push("/");
             }
         });

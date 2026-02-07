@@ -6,17 +6,18 @@ import { TotpForm } from "./_components/totpForm";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import { BackupCodeForm } from "./_components/backupCodeForm";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export default function TwoFactorAuthPage() {
     const { data: session, isPending } = authClient.useSession();
 
-    if (isPending) return (<div>loading...</div>);
+    if (isPending) return (<LoadingScreen />);
 
-    if (!isPending && session === null) {
-        redirect("/auth");
-    }
+    // if (!isPending && session === null) {
+    //     redirect("/auth");
+    // }
 
-    if (!isPending && session) {
+    if (!isPending) {
         return (
             <div className="p-8">
                 <Card>
