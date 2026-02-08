@@ -29,8 +29,8 @@ export function sendVerificationEmail(user: User, url: string) {
     return sendTestEmail(options);
 }
 
-export function sendResetPasswordEmail(user: User, url: string){
-        const options: EmailOptions = {
+export function sendResetPasswordEmail(user: User, url: string) {
+    const options: EmailOptions = {
         from: { name: "better auth test app", email: serverConfig.appEmail },
         to: user.email,
         subject: "Test password reset email",
@@ -66,6 +66,27 @@ export function sendDeleteAccountVerification(user: User, url: string) {
             <p>We're sorry to see you go! Please confirm your account deletion by clicking on the button below:</p>
             <p><a href="${url}">Confirm Deletion</a></p>
         `
+    }
+
+    return sendTestEmail(options);
+}
+
+export function sendOrganizationInviteEmail(
+    invitation: { id: string },
+    inviter: { name: string },
+    organization: { name: string },
+    email: string,
+) {
+    const options: EmailOptions = {
+        from: { name: "Better auth test app", email: serverConfig.appEmail },
+        to: email,
+        subject: `you're invited to join ${organization.name} organization`,
+        html: `
+            <p>you've been invited to join ${organization.name} organization by ${inviter.name}, please click the button below to accept the invitation</p>
+            <a href="${serverConfig.betterAuth.url}/organizations/invitations/${invitation.id}">
+                invitation link
+            </a>
+        `,
     }
 
     return sendTestEmail(options);

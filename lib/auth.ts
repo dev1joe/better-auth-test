@@ -3,9 +3,9 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getDB } from "@/db"; // your drizzle instance
 import { nextCookies } from "better-auth/next-js";
 import { serverConfig } from "@/config/server";
-import { sendDeleteAccountVerification, sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
+import { sendDeleteAccountVerification, sendOrganizationInviteEmail, sendResetPasswordEmail, sendVerificationEmail, sendWelcomeEmail } from "@/services/mail.service";
 import { createAuthMiddleware } from "better-auth/api";
-import { admin, twoFactor } from 'better-auth/plugins';
+import { admin, organization, twoFactor } from 'better-auth/plugins';
 import { passkey } from '@better-auth/passkey'
 
 const db = getDB();
@@ -59,6 +59,11 @@ export const auth = betterAuth({
         twoFactor(),
         passkey(),
         admin(),
+        organization({
+            sendInvitationEmail: async ({ organization, invitation, inviter, email }) => {
+                await sendOrganizationInviteEmail(invitation, inviter.user, organization, email);
+            }
+        })
     ],
     // hooks: {
     //     after: createAuthMiddleware(async (ctx) => {

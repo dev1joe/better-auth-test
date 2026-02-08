@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 const envSchema = z.object({
     DATABASE_URL: z.url().min(1),
+    BETTER_AUTH_SECRET: z.string().min(1),
+    BETTER_AUTH_URL: z.url().min(1),
     ARCJET_KEY: z.string().min(1),
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
@@ -21,6 +23,10 @@ if (!parseResult.success) {
 export const serverConfig = {
     db: {
         url: parseResult.data.DATABASE_URL,
+    },
+    betterAuth: {
+        secret: parseResult.data.BETTER_AUTH_SECRET,
+        url: parseResult.data.BETTER_AUTH_URL,
     },
     arcjet: {
         key: parseResult.data.ARCJET_KEY,
