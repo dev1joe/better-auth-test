@@ -2,11 +2,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { InvitationInformation } from "./_components/InvitationInformation";
 
 export default async function InvitationPage({
     params
 }: PageProps<"/organizations/invitations/[id]">) {
-    const session = auth.api.getSession({ headers: await headers() });
+    const session = await auth.api.getSession({ headers: await headers() });
 
     if (session === null) {
         return redirect("/auth");
@@ -16,6 +17,8 @@ export default async function InvitationPage({
     const invitation = await auth.api.getInvitation({
         headers: await headers(),
         query: { id }
+    }).catch(() => {
+        redirect("/");
     });
 
     return (
@@ -28,8 +31,7 @@ export default async function InvitationPage({
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {/* TODO: show invitation information */}
-                    {/* <InvitationInformation invitation={invitation} /> */}
+                    <InvitationInformation invitation={invitation} />
                 </CardContent>
             </Card>
         </div>

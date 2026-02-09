@@ -14,9 +14,9 @@ export function OrganizationTabs() {
             {activeOrganization && (
                 <Tabs defaultValue="members" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="members">Members</TabsTrigger>
-                        <TabsTrigger value="invitations">Invitations</TabsTrigger>
-                        <TabsTrigger value="subscriptions">Subscriptions</TabsTrigger>
+                        <TabsTrigger className="cursor-pointer" value="members">Members</TabsTrigger>
+                        <TabsTrigger className="cursor-pointer" value="invitations">Invitations</TabsTrigger>
+                        <TabsTrigger className="cursor-pointer" value="subscriptions">Subscriptions</TabsTrigger>
                     </TabsList>
                     <Card>
                         <CardContent>

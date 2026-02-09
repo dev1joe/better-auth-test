@@ -66,9 +66,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [ ] add google to the "supported OAuth providers"
 - [ ] verify form schemas in this application
 - [ ] next.js redirect VS next/navigation/router.push ??
-- [ ] fix: messages/prerender-errors error in reset-password.tsx page
+- [ ] in case the user has no organizations, instead of showing nothing but the create organization button, why not show some description about organizations and how they work
 
 ## Errors 🔴
 - [ ] listing passkeys
-- [ ] impersonation button always visible
+- [X] impersonation button always visible
 - [ ] loading indicator from 2fa form stays visible for a very long time
+- [ ] messages/prerender-errors error in reset-password.tsx page

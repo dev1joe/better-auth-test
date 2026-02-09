@@ -49,7 +49,13 @@ export function CreateOrganizationButton() {
     }
 
     return (
-        <Dialog open={isDialogOpen}>
+        <Dialog
+            open={isDialogOpen}
+            onOpenChange={o => {
+                if (o) form.reset();
+                setIsDialogOpen(o);
+            }}
+        >
             <DialogTrigger asChild>
                 <Button
                     className="cursor-pointer"
@@ -100,7 +106,6 @@ export function CreateOrganizationButton() {
                                 variant="outline"
                                 onClick={() => {
                                     setIsDialogOpen(false);
-                                    form.reset();
                                 }}
                             >
                                 Close

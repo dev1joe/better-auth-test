@@ -1,6 +1,7 @@
 "use client";
 import { BetterAuthActionButton } from "@/components/auth/BetterAuthActionButton";
 import { Badge } from "@/components/ui/badge";
+import { Dialog } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { authClient } from "@/lib/auth-client";
 
@@ -41,12 +42,13 @@ export function MembersTab() {
                             </Badge>
                         </TableCell>
                         <TableCell>
-                            {session?.user.id !== m.user.id && (
+                            {session?.user.id !== m.user.id && m.role != "owner" && (
                                 <BetterAuthActionButton
-                                    action={() => handleRemoveMember(m.user.id)}
+                                    action={() => handleRemoveMember(m.id)}
                                     variant="destructive"
                                     size="sm"
                                     className="cursor-pointer"
+                                    requireAreYouSure
                                 >
                                     Remove
                                 </BetterAuthActionButton>

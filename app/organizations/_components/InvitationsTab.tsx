@@ -24,7 +24,6 @@ export function InvitationsTab() {
                 <CreateInvitationButton />
             </div>
 
-            {/* TODO: make sure invitation are being rendered */}
             {pendingInvitations.length === 0 ? (
                 <Card className="px-6 py-20 text-center">
                     There are no pending invitations.

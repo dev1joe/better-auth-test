@@ -44,6 +44,12 @@ export default function Home() {
               </Button>
             </Link>
 
+            <Link href="/organizations">
+              <Button size='lg' className="cursor-pointer" variant="outline">
+                Organizations
+              </Button>
+            </Link>
+
             {/* admin button */}
             {isAdmin &&
               <Link href="/admin">

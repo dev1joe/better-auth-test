@@ -34,7 +34,7 @@ export function CreateInvitationButton() {
         return authClient.organization.inviteMember(data, {
             onError: (error) => {
                 toast.error(error.error.message || "Failed to invite user")
-            }, 
+            },
             onSuccess: () => {
                 setIsDialogOpen(false);
                 form.reset();
@@ -43,7 +43,13 @@ export function CreateInvitationButton() {
     }
 
     return (
-        <Dialog open={isDialogOpen}>
+        <Dialog
+            open={isDialogOpen}
+            onOpenChange={o => {
+                if (o) form.reset();
+                setIsDialogOpen(o);
+            }}
+        >
             <DialogTrigger asChild>
                 <Button
                     onClick={() => setIsDialogOpen(true)}
@@ -118,7 +124,6 @@ export function CreateInvitationButton() {
                                 variant="outline"
                                 onClick={() => {
                                     setIsDialogOpen(false);
-                                    form.reset();
                                 }}
                             >
                                 Close

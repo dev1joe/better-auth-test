@@ -1,5 +1,4 @@
 "use client";
-
 import { authClient } from "@/lib/auth-client";
 import { BetterAuthActionButton } from "./BetterAuthActionButton";
 import { UserX } from "lucide-react";
@@ -19,7 +18,8 @@ export function ImpersonationIndicator() {
         })
     }
 
-    if (session?.session.impersonatedBy !== null) {
+    // using loose inequality operator for treating "undefined" & "null" the same
+    if (session?.session.impersonatedBy != null) {
         return (
             <div className="fixed left-4 bottom-4 z-999">
                 <BetterAuthActionButton

@@ -80,9 +80,9 @@ export function sendOrganizationInviteEmail(
     const options: EmailOptions = {
         from: { name: "Better auth test app", email: serverConfig.appEmail },
         to: email,
-        subject: `you're invited to join ${organization.name} organization`,
+        subject: `you're invited to join "${organization.name}" organization`,
         html: `
-            <p>you've been invited to join ${organization.name} organization by ${inviter.name}, please click the button below to accept the invitation</p>
+            <p>you've been invited to join "${organization.name}" organization by "${inviter.name}", please click the button below to accept the invitation</p>
             <a href="${serverConfig.betterAuth.url}/organizations/invitations/${invitation.id}">
                 invitation link
             </a>
