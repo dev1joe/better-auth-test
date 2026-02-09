@@ -1,5 +1,3 @@
-"use client";
-import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -11,21 +9,18 @@ import { SecurityTab } from "./_components/SecurityTab";
 import { SessionsTab } from "./_components/SessionsTab";
 import { AccountsManagement } from "./_components/AccountManagement";
 import { AccountDeletion } from "./_components/AccountDeletion";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
-    const { data: session, isPending: loading } = authClient.useSession();
-    // console.log(session); // comment that
+export default async function ProfilePage() {
+    const session = await auth.api.getSession({ headers: await headers() });
 
-    if (loading) {
-        // TODO: handle loading state, maybe use a skeleton
-        return (
-            <div className="cursor-progress w-screen h-screen flex justify-center items-center">
-                <p className="text-3xl font-semibold">Loading...</p>
-            </div>
-        );
+    if (session == null) {
+        return redirect("/auth");
     }
 
-    return ( // TODO: bottom margin is hidden, solve that!
+    return (
         <div className="max-w-4xl mx-auto my-6 px-4 box-border">
             <div className="mb-8">
                 <Link href="/" className="inline-flex items-center mb-6">

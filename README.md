@@ -58,7 +58,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [ ] create multiple roles using admin plugin
 - [ ] organization better-auth plugin
     - [ ] organizations invitations inbox
-    - [ ] organizations invite email
+    - [X] organizations invite email
 - [ ] website skeleton loading 
 - [ ] navbar to be able to return to home from anywhere
 - [ ] profile page: show verification status (turn `requireEmailVerification` off first) 
@@ -73,3 +73,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [X] impersonation button always visible
 - [ ] loading indicator from 2fa form stays visible for a very long time
 - [ ] messages/prerender-errors error in reset-password.tsx page
+- [ ] send verification email page countdown

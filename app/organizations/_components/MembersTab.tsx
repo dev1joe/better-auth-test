@@ -1,7 +1,6 @@
 "use client";
 import { BetterAuthActionButton } from "@/components/auth/BetterAuthActionButton";
 import { Badge } from "@/components/ui/badge";
-import { Dialog } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { authClient } from "@/lib/auth-client";
 
